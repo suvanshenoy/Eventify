@@ -7,7 +7,7 @@ const Sidebar = () => {
       <ul>
         <li><Link to="/event-organizers">Event Organizers</Link></li>
         <li><Link to="/attendees">Attendees</Link></li>
-        <li><Link to="/attendees">Events</Link></li>
+        <li><Link to="/events">Events</Link></li>
 
       </ul>
     </div>
