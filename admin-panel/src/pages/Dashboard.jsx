@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Sidebar from "../components/Sidebar";
 import axios from "axios";
+import Sidebar from "../components/Sidebar"; // Import Sidebar
 import Navbar from "../components/Navbar"; // Import Navbar
-
 
 const Dashboard = () => {
   const [organizersCount, setOrganizersCount] = useState(0);
@@ -33,21 +32,24 @@ const Dashboard = () => {
     <>
       <Navbar />
       <div className="dashboard-container">
-        <h2>Admin Dashboard</h2>
-        <div className="stats">
-          <div className="stat-card">
-            <h3>Event Organizers</h3>
-            <p>{organizersCount}</p>
-          </div>
-          <div className="stat-card">
-            <h3>Attendees</h3>
-            <p>{attendeesCount}</p>
+        <Sidebar />
+
+        <div className="dashboard-content">
+          <h2 className="dashboard-title">Admin Dashboard</h2>
+          <div className="stats-container">
+            <div className="stat-card">
+              <h3>Event Organizers</h3>
+              <p>{organizersCount}</p>
+            </div>
+            <div className="stat-card">
+              <h3>Attendees</h3>
+              <p>{attendeesCount}</p>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 };
-
 
 export default Dashboard;
