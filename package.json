@@ -1,6 +1,7 @@
 {
 	"scripts": {
-		"dev:admin-panel": "npm i ; cd ./admin-panel  && npm i && npm run dev"
+		"dev:admin-panel": "cd admin-panel && npm install && npm run dev"
+
 	},
 	"dependencies": {
 		"axios": "^1.8.3",
