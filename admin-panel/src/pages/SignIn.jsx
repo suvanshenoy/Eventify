@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
-export function Login() {
+export function SignIn() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
@@ -37,7 +37,7 @@ export function Login() {
 					onChange={(e) => setPassword(e.target.value)}
 					required
 				/>
-				<button type="submit">Login</button>
+				<button type="submit">sign in</button>
 			</form>
 		</div>
 	);
