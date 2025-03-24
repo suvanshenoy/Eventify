@@ -10,9 +10,8 @@ export function SignIn() {
 	const handleLogin = async (e) => {
 		e.preventDefault();
 
-		// Hardcoded credentials for testing
 		if (email === "admin@example.com" && password === "Admin@123") {
-			localStorage.setItem("token", "dummyToken"); // Store a fake token
+			localStorage.setItem("token", "dummyToken");
 			navigate("/dashboard");
 		} else {
 			alert("Login failed! Check credentials.");
@@ -20,7 +19,7 @@ export function SignIn() {
 	};
 
 	return (
-		<div className="login-container">
+		<div className="">
 			<h2>Admin Login</h2>
 			<form onSubmit={handleLogin}>
 				<input
@@ -37,7 +36,9 @@ export function SignIn() {
 					onChange={(e) => setPassword(e.target.value)}
 					required
 				/>
-				<button type="submit">sign in</button>
+				<button className="" type="submit">
+					sign in
+				</button>
 			</form>
 		</div>
 	);
