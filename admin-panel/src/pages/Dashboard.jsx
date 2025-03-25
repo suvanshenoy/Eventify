@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
-import { Sidebar } from "../components/sidebar/Sidebar";
-import { Navbar } from "../components/navbar/Navbar";
+import { Sidebar } from "@/components/sidebar/Sidebar";
+import { Navbar } from "@/components/navbar/Navbar";
 
 export function Dashboard() {
 	const [organizersCount, setOrganizersCount] = useState(0);
