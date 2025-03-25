@@ -19,11 +19,11 @@ export function SignIn() {
 	};
 
 	return (
-		<div className="tw:min-h-screen tw:flex tw:items-center tw:justify-center tw:bg-gradient-to-r tw:from-blue-500 tw:to-blue-700">
+		<div className="tw:min-h-screen tw:flex tw:flex-col tw:items-center tw:justify-center tw:bg-gradient-to-r tw:from-blue-500 tw:to-blue-700">
 			<div className="tw:d-card tw:w-96 tw:bg-white tw:shadow-2xl tw:p-6 tw:rounded-lg">
 				<div className="tw:d-card-body">
 					<h2 className="tw:d-card-title tw:text-3xl tw:font-bold tw:text-center tw:text-blue-600 tw:mb-4">
-						Admin Login
+						Admin Sign In
 					</h2>
 					<form onSubmit={handleLogin} className="tw:space-y-6">
 						<div className="tw:d-form-control">
@@ -67,6 +67,15 @@ export function SignIn() {
 								Sign In
 							</button>
 						</div>
+						<p className="tw-text-center tw-mt-4">
+							Don't have an account?{" "}
+							<span
+								className="tw:text-blue-500 tw:cursor-pointer tw:underline"
+								onClick={() => navigate("/sign-up")}
+							>
+								Sign Up
+							</span>
+						</p>
 					</form>
 				</div>
 			</div>
