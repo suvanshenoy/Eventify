@@ -40,7 +40,7 @@ export function SignUp() {
 			<div className="tw:d-card tw:w-96 tw:bg-white tw:shadow-2xl tw:p-6 tw:rounded-lg">
 				<div className="tw:d-card-body">
 					<h2 className="tw:d-card-title tw:text-3xl tw:font-bold tw:text-center tw:text-blue-600 tw:mb-4">
-						Sign Up
+						Sign UP
 					</h2>
 					<form onSubmit={handleSubmit} className="tw:space-y-6">
 						<div className="tw:d-form-control">
