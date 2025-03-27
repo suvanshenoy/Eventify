@@ -4,21 +4,35 @@ import axios from "axios";
 
 export function SignUp() {
 	const [formData, setFormData] = useState({
-		id: "",
+		role: "attendee",
 		name: "",
 		email: "",
 		password: "",
 	});
+	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
+	// Handle input change
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.name]: e.target.value });
 	};
 
+	// Handle form submission
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log("User Data:", formData);
-		// API call integration can be added here
+		setError(""); // Reset error message
+
+		try {
+			const response = await axios.post("http://localhost:8080/api/admin/signup", formData);
+			alert(response.data); // Show success message
+			navigate("/"); // Redirect to login page
+		} catch (error) {
+			if (error.response) {
+				setError(error.response.data); // Show error from backend
+			} else {
+				setError("An error occurred. Please try again.");
+			}
+		}
 	};
 
 	return (
@@ -26,22 +40,22 @@ export function SignUp() {
 			<div className="tw:d-card tw:w-96 tw:bg-white tw:shadow-2xl tw:p-6 tw:rounded-lg">
 				<div className="tw:d-card-body">
 					<h2 className="tw:d-card-title tw:text-3xl tw:font-bold tw:text-center tw:text-blue-600 tw:mb-4">
-						Admin Sign Up
+						Sign Up
 					</h2>
 					<form onSubmit={handleSubmit} className="tw:space-y-6">
 						<div className="tw:d-form-control">
 							<label className="tw:d-label">
-								<span className="tw:d-label-text tw:font-semibold">ID</span>
+								<span className="tw:d-label-text tw:font-semibold">Role</span>
 							</label>
-							<input
-								type="text"
-								name="id"
-								placeholder="Enter your ID"
-								value={formData.id}
+							<select
+								name="role"
+								value={formData.role}
 								onChange={handleChange}
-								className="tw:d-input tw:d-input-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
-								required
-							/>
+								className="tw:d-select tw:d-select-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
+							>
+								<option value="attendee">Attendee</option>
+								<option value="organizer">Organizer</option>
+							</select>
 						</div>
 
 						<div className="tw:d-form-control">
@@ -76,9 +90,7 @@ export function SignUp() {
 
 						<div className="tw:d-form-control">
 							<label className="tw:d-label">
-								<span className="tw:d-label-text tw:font-semibold">
-									Password
-								</span>
+								<span className="tw:d-label-text tw:font-semibold">Password</span>
 							</label>
 							<input
 								type="password"
@@ -103,16 +115,14 @@ export function SignUp() {
 							</button>
 						</div>
 						<p className="tw-text-center tw-mt-4">
-							{" "}
-							Already have an account?{" "}
-							<span
-								className="tw:text-blue-500 tw:cursor-pointer tw:underline"
-								onClick={() => navigate("/sign-in")}
-							>
-								{" "}
+							Already have an account?
+							<span className="tw:text-blue-500 tw:cursor-pointer tw:underline" onClick={() => navigate("/")}>
 								Sign In
-							</span>{" "}
+							</span>
 						</p>
+
+						{/* Display error message */}
+						{error && <p className="tw-text-red-500 tw-text-center">{error}</p>}
 					</form>
 				</div>
 			</div>
