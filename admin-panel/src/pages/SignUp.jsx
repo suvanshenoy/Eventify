@@ -3,8 +3,8 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 
 export function SignUp() {
-	const [formData, setFormData] = useState({
-		role: "attendee",
+	const [signUpData, setSignUpData] = useState({
+		role: "admin",
 		name: "",
 		email: "",
 		password: "",
@@ -12,25 +12,27 @@ export function SignUp() {
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
-	// Handle input change
 	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value });
+		const { name, value } = e.target;
+		setSignUpData({ ...signUpData, [name]: value });
 	};
 
-	// Handle form submission
-	const handleSubmit = async (e) => {
+	const handleSignUp = async (e) => {
 		e.preventDefault();
-		setError(""); // Reset error message
+		setError("");
 
 		try {
-			const response = await axios.post("http://localhost:8080/api/admin/signup", formData);
-			alert(response.data); // Show success message
-			navigate("/"); // Redirect to login page
+			const response = await axios.post(
+				"http://localhost:8080/api/admin/signup",
+				signUpData,
+				{ responseType: "json" },
+			);
+			navigate("/");
 		} catch (error) {
 			if (error.response) {
-				setError(error.response.data); // Show error from backend
+				setError(error.response.data);
 			} else {
-				setError("An error occurred. Please try again.");
+				setError("Sign up failed!, Please try again.");
 			}
 		}
 	};
@@ -40,19 +42,25 @@ export function SignUp() {
 			<div className="tw:d-card tw:w-96 tw:bg-white tw:shadow-2xl tw:p-6 tw:rounded-lg">
 				<div className="tw:d-card-body">
 					<h2 className="tw:d-card-title tw:text-3xl tw:font-bold tw:text-center tw:text-blue-600 tw:mb-4">
-						Sign UP
+						Sign Up
 					</h2>
-					<form onSubmit={handleSubmit} className="tw:space-y-6">
+					{error && (
+						<div className="tw:d-alert tw:d-alert-error tw:mb-4">
+							<span>{error}</span>
+						</div>
+					)}
+					<form onSubmit={handleSignUp} className="tw:space-y-6">
 						<div className="tw:d-form-control">
 							<label className="tw:d-label">
 								<span className="tw:d-label-text tw:font-semibold">Role</span>
 							</label>
 							<select
 								name="role"
-								value={formData.role}
+								value={signUpData.role}
 								onChange={handleChange}
 								className="tw:d-select tw:d-select-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
 							>
+								<option value="admin">Admin</option>
 								<option value="attendee">Attendee</option>
 								<option value="organizer">Organizer</option>
 							</select>
@@ -66,7 +74,7 @@ export function SignUp() {
 								type="text"
 								name="name"
 								placeholder="Enter your name"
-								value={formData.name}
+								value={signUpData.name}
 								onChange={handleChange}
 								className="tw:d-input tw:d-input-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
 								required
@@ -81,7 +89,7 @@ export function SignUp() {
 								type="email"
 								name="email"
 								placeholder="Enter your email"
-								value={formData.email}
+								value={signUpData.email}
 								onChange={handleChange}
 								className="tw:d-input tw:d-input-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
 								required
@@ -90,13 +98,15 @@ export function SignUp() {
 
 						<div className="tw:d-form-control">
 							<label className="tw:d-label">
-								<span className="tw:d-label-text tw:font-semibold">Password</span>
+								<span className="tw:d-label-text tw:font-semibold">
+									Password
+								</span>
 							</label>
 							<input
 								type="password"
 								name="password"
 								placeholder="Enter your password"
-								value={formData.password}
+								value={signUpData.password}
 								onChange={handleChange}
 								minLength="8"
 								pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
@@ -114,15 +124,15 @@ export function SignUp() {
 								Sign Up
 							</button>
 						</div>
-						<p className="tw-text-center tw-mt-4">
-							Already have an account?
-							<span className="tw:text-blue-500 tw:cursor-pointer tw:underline" onClick={() => navigate("/")}>
+						<p className="tw:text-center tw:mt-4">
+							Already have an account?{" "}
+							<span
+								className="tw:text-blue-500 tw:cursor-pointer tw:underline"
+								onClick={() => navigate("/")}
+							>
 								Sign In
 							</span>
 						</p>
-
-						{/* Display error message */}
-						{error && <p className="tw-text-red-500 tw-text-center">{error}</p>}
 					</form>
 				</div>
 			</div>
