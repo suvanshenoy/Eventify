@@ -3,18 +3,50 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 
 export function SignIn() {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
+	const [signInData, setSignInData] = useState({
+		role: "admin",
+		email: "",
+		password: "",
+	});
+
+	const [error, setError] = useState("");
 	const navigate = useNavigate();
 
-	const handleLogin = async (e) => {
-		e.preventDefault();
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setSignInData({ ...signInData, [name]: value });
+	};
 
-		if (email === "admin@example.com" && password === "Admin@123") {
-			localStorage.setItem("token", "dummyToken");
-			navigate("/dashboard");
-		} else {
-			alert("Login failed! Check credentials.");
+	const handleSignIn = async (e) => {
+		e.preventDefault();
+		setError("");
+
+		try {
+			const response = await axios.post(
+				"http://localhost:8080/api/admin/signin",
+				signInData,
+				{ responseType: "json" },
+			);
+
+			if (response.status === 200) {
+				localStorage.setItem("token", response.data.token);
+				const { role, email, password } = response.data;
+				console.log(response.data);
+				if (
+					role === "admin" &&
+					email === "admin@example.com" &&
+					password === "Admin@123"
+				) {
+					navigate("/dashboard");
+				} else if (role === "attendee") {
+					navigate("/attendee-dashboard");
+				} else if (role === "organizer") {
+					navigate("/organizer-dashboard");
+				}
+			}
+		} catch (err) {
+			setError("Sign in failed! Please check your credentials.");
+			console.error(err);
 		}
 	};
 
@@ -23,9 +55,29 @@ export function SignIn() {
 			<div className="tw:d-card tw:w-96 tw:bg-white tw:shadow-2xl tw:p-6 tw:rounded-lg">
 				<div className="tw:d-card-body">
 					<h2 className="tw:d-card-title tw:text-3xl tw:font-bold tw:text-center tw:text-blue-600 tw:mb-4">
-						Admin Sign In
+						Sign In
 					</h2>
-					<form onSubmit={handleLogin} className="tw:space-y-6">
+					{error && (
+						<div className="tw:d-alert tw:d-alert-error tw:mb-4">
+							<span>{error}</span>
+						</div>
+					)}
+					<form onSubmit={handleSignIn} className="tw:space-y-6">
+						<div className="tw:d-form-control">
+							<label className="tw:d-label">
+								<span className="tw:d-label-text tw:font-semibold">Role</span>
+							</label>
+							<select
+								name="role"
+								value={signInData.role}
+								onChange={handleChange}
+								className="tw:d-select tw:d-select-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
+							>
+								<option value="admin">Admin</option>
+								<option value="attendee">Attendee</option>
+								<option value="organizer">Organizer</option>
+							</select>
+						</div>
 						<div className="tw:d-form-control">
 							<label className="tw:d-label">
 								<span className="tw:d-label-text tw:font-semibold">Email</span>
@@ -33,8 +85,9 @@ export function SignIn() {
 							<input
 								type="email"
 								placeholder="Enter your email"
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
+								name="email"
+								value={signInData.email}
+								onChange={handleChange}
 								className="tw:d-input tw:d-input-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
 								required
 							/>
@@ -49,8 +102,9 @@ export function SignIn() {
 							<input
 								type="password"
 								placeholder="Enter your password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								name="password"
+								value={signInData.password}
+								onChange={handleChange}
 								minLength="8"
 								pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 								title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
@@ -67,7 +121,7 @@ export function SignIn() {
 								Sign In
 							</button>
 						</div>
-						<p className="tw-text-center tw-mt-4">
+						<p className="tw:text-center tw:mt-4">
 							Don't have an account?{" "}
 							<span
 								className="tw:text-blue-500 tw:cursor-pointer tw:underline"
