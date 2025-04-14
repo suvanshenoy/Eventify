@@ -1,7 +1,7 @@
-package com.example.eventify.controllers;
+package com.github.eventify.controllers;
 
-import com.example.eventify.models.Event;
-import com.example.eventify.repositories.EventRepository;
+import com.github.eventify.models.Event;
+import com.github.eventify.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

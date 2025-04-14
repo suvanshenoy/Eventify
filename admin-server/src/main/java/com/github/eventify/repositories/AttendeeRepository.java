@@ -1,6 +1,6 @@
-package com.example.eventify.repositories;
+package com.github.eventify.repositories;
 
-import com.example.eventify.models.Attendee;
+import com.github.eventify.models.Attendee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

@@ -1,11 +1,11 @@
-package com.example.eventify.controllers;
+package com.github.eventify.controllers;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import com.example.eventify.models.Organizer;
-import com.example.eventify.models.Attendee;
-import com.example.eventify.models.UserRequest;
-import com.example.eventify.repositories.OrganizerRepository;
-import com.example.eventify.repositories.AttendeeRepository;
+import com.github.eventify.models.Organizer;
+import com.github.eventify.models.Attendee;
+import com.github.eventify.models.UserRequest;
+import com.github.eventify.repositories.OrganizerRepository;
+import com.github.eventify.repositories.AttendeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.example.eventify.models;
+package com.github.eventify.models;
 
 public class UserRequest {
     private String name;
