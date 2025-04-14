@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = "http://localhost:5173",allowedHeaders ="*" ,
+@CrossOrigin(origins = "http://localhost:3000",allowedHeaders ="*" ,
         methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
 public class AdminController {
 
