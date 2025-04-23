@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./*"],
+			"@admin-panel/*": ["./admin-panel/*"],
+			"@landing-page/*": ["./landing-page/*"]
+		}
+	}
+}
