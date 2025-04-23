@@ -7,14 +7,12 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { Testimonials } from "@/components/Testimonials";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { Events } from "@/components/Events";
 
 const Home = () => (
 	<main>
 		<Hero />
 		<Features />
 		<HowItWorks />
-		<Events/>
 		<Testimonials />
 		<Contact />
 	</main>

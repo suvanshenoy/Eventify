@@ -35,7 +35,7 @@ export function HowItWorks() {
 					{steps.map((step, index) => (
 						<div key={index} className="tw:d-card tw:bg-base-100 tw:shadow-xl">
 							<div className="tw:d-card-body tw:items-center tw:text-center">
-								<div className="tw:w-12 tw:h-12 tw:rounded-full tw:bg-primary tw:text-primary-content tw:flex tw:items-center tw:justify-center tw:text-xl tw:font-bold tw:mb-4">
+								<div className="tw:w-12 tw:h-12 tw:rounded-full tw:bg-blue-600 tw:text-primary-content tw:flex tw:items-center tw:justify-center tw:text-xl tw:font-bold tw:mb-4">
 									{step.number}
 								</div>
 								<h3 className="tw:d-card-title">{step.title}</h3>

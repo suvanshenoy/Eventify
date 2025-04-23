@@ -4,7 +4,7 @@ import axios from "axios";
 
 export function SignUp() {
 	const [signUpData, setSignUpData] = useState({
-		role: "admin",
+		role: "organizer",
 		name: "",
 		email: "",
 		password: "",
@@ -27,7 +27,7 @@ export function SignUp() {
 				signUpData,
 				{ responseType: "json" },
 			);
-			navigate("/");
+			navigate("/sign-in");
 		} catch (error) {
 			if (error.response) {
 				setError(error.response.data);
@@ -60,9 +60,9 @@ export function SignUp() {
 								onChange={handleChange}
 								className="tw:d-select tw:d-select-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
 							>
-								<option value="admin">Admin</option>
-								<option value="attendee">Attendee</option>
+								{/*<option value="admin">Admin</option>*/}
 								<option value="organizer">Organizer</option>
+								<option value="attendee">Attendee</option>
 							</select>
 						</div>
 
@@ -128,7 +128,7 @@ export function SignUp() {
 							Already have an account?{" "}
 							<span
 								className="tw:text-blue-500 tw:cursor-pointer tw:underline"
-								onClick={() => navigate("/")}
+								onClick={() => navigate("/sign-in")}
 							>
 								Sign In
 							</span>

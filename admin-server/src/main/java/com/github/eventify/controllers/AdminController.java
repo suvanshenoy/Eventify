@@ -76,12 +76,12 @@ public class AdminController {
     public ResponseEntity<?> signIn(@RequestBody UserRequest userRequest) {
         Optional<Attendee> attendee = attendeeRepository.findByEmail(userRequest.getEmail());
         if (attendee.isPresent() && attendee.get().getPassword().equals(userRequest.getPassword())) {
-            return ResponseEntity.ok(new AuthResponse("attendee", "sample-token")); // Replace with real token generation
+            return ResponseEntity.ok(new AuthResponse("attendee", "sample-token", attendee.get().getId()));
         }
 
         Optional<Organizer> organizer = organizerRepository.findByEmail(userRequest.getEmail());
         if (organizer.isPresent() && organizer.get().getPassword().equals(userRequest.getPassword())) {
-            return ResponseEntity.ok(new AuthResponse("organizer", "sample-token")); // Replace with real token generation
+            return ResponseEntity.ok(new AuthResponse("organizer", "sample-token", organizer.get().getId()));
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email or password");
@@ -91,10 +91,12 @@ public class AdminController {
     static class AuthResponse {
         public String role;
         public String token;
+        public Long userId;
 
-        public AuthResponse(String role, String token) {
+        public AuthResponse(String role, String token, Long userId) {
             this.role = role;
             this.token = token;
+            this.userId = userId;
         }
     }
 
