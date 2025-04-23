@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 export function Hero() {
+	const navigate = useNavigate();
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		navigate("/sign-up");
+	};
 	return (
 		<div className="tw:min-h-screen tw:bg-base-200">
 			<div className="tw:flex tw:items-center tw:justify-center tw:min-h-screen">
@@ -12,7 +19,11 @@ export function Hero() {
 							planning to execution, we've got you covered.
 						</p>
 						<div className="tw:flex tw:gap-4 tw:justify-center">
-							<button type="button" className="tw:d-btn tw:d-btn-primary">
+							<button
+								onClick={handleClick}
+								type="button"
+								className="tw:d-btn tw:d-btn-primary tw:bg-blue-600 tw:hover:bg-blue-700"
+							>
 								Get Started
 							</button>
 							<button type="button" className="tw:d-btn tw:d-btn-ghost">

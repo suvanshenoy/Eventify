@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
+import { Events } from "@admin-panel/components/Events";
 
 export function AttendeeDashboard() {
 	const navigate = useNavigate();
@@ -17,14 +18,15 @@ export function AttendeeDashboard() {
 
 	return (
 		<div className="tw:min-h-screen tw:bg-gray-100">
-			<nav className="tw:bg-blue-600 tw:p-4">
+			<nav className="tw:p-4 tw:my-10">
 				<div className="tw:container tw:mx-auto tw:flex tw:justify-between tw:items-center">
-					<h1 className="tw:text-white tw:text-2xl tw:font-bold">
+					{/*<h1 className="tw:text-white tw:text-2xl tw:font-bold">
 						Attendee Dashboard
-					</h1>
+					</h1>*/}
 					<button
+						type="button"
 						onClick={handleLogout}
-						className="tw:bg-red-500 tw:text-white tw:px-4 tw:py-2 tw:rounded tw:hover:bg-red-600"
+						className="tw:bg-red-500 tw:text-white tw:px-4 tw:py-2 tw:rounded tw:hover:bg-red-600 tw:cursor-pointer"
 					>
 						Logout
 					</button>
@@ -39,6 +41,7 @@ export function AttendeeDashboard() {
 						This is your attendee dashboard. Here you can view events, register,
 						etc.
 					</p>
+					<Events />
 				</div>
 			</div>
 		</div>

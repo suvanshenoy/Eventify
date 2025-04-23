@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { Link } from "react-router";
 
 export function Navbar() {
+	const navigate = useNavigate();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		navigate("sign-up");
+	};
 
 	return (
 		<div className="tw:flex tw:items-center tw:bg-base-100 tw:fixed tw:top-0 tw:z-50 tw:shadow-md tw:w-full tw:px-2">
@@ -70,9 +77,13 @@ export function Navbar() {
 				</ul>
 			</div>
 			<div className="tw:flex-1 tw:flex tw:justify-end">
-				<Link to="/signup" className="tw:d-btn tw:d-btn-primary">
+				<button
+					onClick={handleSubmit}
+					type="button"
+					className="tw:d-btn tw:d-btn-primary tw:bg-blue-600 tw:hover:bg-blue-700"
+				>
 					Get Started
-				</Link>
+				</button>
 			</div>
 		</div>
 	);

@@ -47,7 +47,7 @@ export function Contact() {
 										placeholder="Your message"
 									></textarea>
 								</div>
-								<button className="tw:d-btn tw:d-btn-primary tw:w-full">
+								<button className="tw:d-btn tw:d-btn-primary tw:bg-blue-600 tw:hover:bg-blue-700 tw:w-full">
 									Send Message
 								</button>
 							</form>
@@ -130,7 +130,7 @@ export function Contact() {
 							<div className="tw:mt-8">
 								<button
 									type="button"
-									className="tw:d-btn tw:d-btn-primary tw:w-full"
+									className="tw:d-btn tw:d-btn-primary tw:bg-blue-600 tw:hover:bg-blue-700 tw:w-full"
 								>
 									Start Free Trial
 								</button>

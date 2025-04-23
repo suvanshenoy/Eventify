@@ -4,7 +4,7 @@ import axios from "axios";
 
 export function SignIn() {
 	const [signInData, setSignInData] = useState({
-		role: "admin",
+		role: "organizer",
 		email: "",
 		password: "",
 	});
@@ -30,17 +30,15 @@ export function SignIn() {
 
 			if (response.status === 200) {
 				localStorage.setItem("token", response.data.token);
-				const { role, email, password } = response.data;
-				console.log(response.data);
-				if (
-					role === "admin" &&
-					email === "admin@example.com" &&
-					password === "Admin@123"
-				) {
+				const { role, userId } = response.data;
+				
+				if (role === "admin") {
 					navigate("/dashboard");
 				} else if (role === "attendee") {
+					localStorage.setItem("attendeeId", userId);
 					navigate("/attendee-dashboard");
 				} else if (role === "organizer") {
+					localStorage.setItem("organizerId", userId);
 					navigate("/organizer-dashboard");
 				}
 			}
@@ -73,9 +71,9 @@ export function SignIn() {
 								onChange={handleChange}
 								className="tw:d-select tw:d-select-bordered tw:w-full tw:border-blue-500 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-400"
 							>
-								<option value="admin">Admin</option>
-								<option value="attendee">Attendee</option>
+								{/*<option value="admin">Admin</option>*/}
 								<option value="organizer">Organizer</option>
+								<option value="attendee">Attendee</option>
 							</select>
 						</div>
 						<div className="tw:d-form-control">

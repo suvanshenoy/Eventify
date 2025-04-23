@@ -8,10 +8,12 @@ export default defineConfig({
 	plugins: [react(), tailwindcss()],
 	resolve: {
 		alias: {
-			"@": path.resolve(__dirname, "./src"),
+			"@": path.resolve(__dirname, "./"),
+			"@admin-panel": path.resolve(__dirname, "./admin-panel"),
+			"@landing-page": path.resolve(__dirname, "./landing-page"),
 		},
 	},
 	server: {
-		port: 3001,
+		port: 3000,
 	},
 });
