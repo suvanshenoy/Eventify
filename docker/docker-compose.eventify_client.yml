@@ -1,0 +1,37 @@
+services:
+  eventify_client:
+    image: ${EVENTIFY_CLIENT_IMAGE:-node:22-alpine}
+    container_name: ${EVENTIFY_CLIENT_CONTAINER:-eventify_client}
+    restart: always
+    env_file: .env
+    build:
+      context: ..
+      dockerfile_inline: |
+        FROM node:22-alpine
+        ARG EVENTIFY_CLIENT_USER=default_user &&\
+            EVENTIFY_CLIENT_WORKDIR=default_dir
+        RUN mkdir -p ${EVENTIFY_CLIENT_WORKDIR}/node_modules && chown -R node:node ${EVENTIFY_CLIENT_WORKDIR}
+        WORKDIR ${EVENTIFY_CLIENT_WORKDIR}
+        USER ${EVENTIFY_CLIENT_USER}
+        COPY --chown=${EVENTIFY_CLIENT_USER}:${EVENTIFY_CLIENT_USER} package*.json ./
+        RUN npm install
+        COPY --chown=${EVENTIFY_CLIENT_USER}:${EVENTIFY_CLIENT_USER} . .
+        RUN rm -rf ./admin-server
+        EXPOSE 3000
+        ENTRYPOINT ["npm","run","dev"]
+    ports:
+      - ${EVENTIFY_CLIENT_PORT:-3000}:${EVENTIFY_CLIENT_PORT:-3000}
+
+        
+
+    
+    
+
+
+
+
+
+
+
+
+    

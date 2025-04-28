@@ -1,0 +1,28 @@
+services:
+  eventify_server:
+    image: ${EVENTIFY_SERVER_IMAGE:-openjdk:21-slim}
+    container_name: ${EVENTIFY_SERVER_CONTAINER:-eventify_server}
+    depends_on:
+      - eventify_db
+    build:
+      context: ../admin-server
+      dockerfile_inline: |
+        FROM openjdk:21-slim
+        ARG EVENTIFY_SERVER_WORKDIR=default_dir &&\
+            EVENTIFY_SERVER_SNAPSHOT=default_snapshot &&\
+            EVENTIFY_SERVER_PORT=default_port
+        WORKDIR ${EVENTIFY_SERVER_WORKDIR}
+        COPY ./target/${EVENTIFY_SERVER_SNAPSHOT} ${EVENTIFY_SERVER_WORKDIR}
+        EXPOSE ${EVENTIFY_SERVER_PORT}
+        ENTRYPOINT ["java","-jar","admin-server-0.0.1-SNAPSHOT.jar"]
+    ports:
+      - 8082:${EVENTIFY_SERVER_PORT:-8080}
+
+  eventify_db:
+    image: mysql:latest
+    container_name: eventify_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${EVENTIFY_DB_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${EVENTIFY_DB_DATABASE:-appdb}
+    ports:
+      - 3307:${EVENTIFY_DB_PORT:-3306}
