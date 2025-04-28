@@ -11,6 +11,7 @@ export function SignIn() {
 
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+    const apiBaseUrl =  "http://localhost:8082"
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -23,7 +24,7 @@ export function SignIn() {
 
 		try {
 			const response = await axios.post(
-				"http://localhost:8080/api/admin/signin",
+				`${apiBaseUrl}/api/admin/signin`,
 				signInData,
 				{ responseType: "json" },
 			);

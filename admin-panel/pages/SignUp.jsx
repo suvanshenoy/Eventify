@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import process from "node:process";
 
 export function SignUp() {
 	const [signUpData, setSignUpData] = useState({
@@ -11,6 +12,7 @@ export function SignUp() {
 	});
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
+    const apiBaseUrl =  "http://localhost:8082"
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -23,7 +25,7 @@ export function SignUp() {
 
 		try {
 			const response = await axios.post(
-				"http://localhost:8080/api/admin/signup",
+				`${apiBaseUrl}/api/admin/signup`,
 				signUpData,
 				{ responseType: "json" },
 			);

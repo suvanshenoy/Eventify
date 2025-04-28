@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+
 export function Events() {
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+    const apiBaseUrl =  "http://localhost:8082"
 
 	useEffect(() => {
 		const fetchEvents = async () => {
 			try {
-				const response = await axios.get("http://localhost:8080/api/events/");
+				const response = await axios.get(`${apiBaseUrl}/api/events/`);
 				if (response.data && Array.isArray(response.data)) {
 					setEvents(response.data);
 				} else {

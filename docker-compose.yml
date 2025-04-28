@@ -1,0 +1,53 @@
+services:
+  eventify_client:
+    image: ${EVENTIFY_CLIENT_IMAGE:-node:22-alpine}
+    container_name: ${EVENTIFY_CLIENT_CONTAINER:-eventify_client}
+    restart: always
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM node:22-alpine
+        ARG EVENTIFY_CLIENT_USER=default_user &&\
+            EVENTIFY_CLIENT_WORKDIR=default_dir
+        RUN mkdir -p ${EVENTIFY_CLIENT_WORKDIR}/node_modules && chown -R node:node ${EVENTIFY_CLIENT_WORKDIR}
+        WORKDIR ${EVENTIFY_CLIENT_WORKDIR}
+        USER ${EVENTIFY_CLIENT_USER}
+        COPY --chown=${EVENTIFY_CLIENT_USER}:${EVENTIFY_CLIENT_USER} package*.json ./
+        RUN npm install
+        COPY --chown=${EVENTIFY_CLIENT_USER}:${EVENTIFY_CLIENT_USER} . .
+        EXPOSE 3000
+        ENTRYPOINT ["npm","run","dev:vite"]
+    depends_on:
+      - eventify_server
+    ports:
+      - ${EVENTIFY_CLIENT_PORT:-3000}:${EVENTIFY_CLIENT_PORT:-3000}
+    
+  eventify_server:
+    image: ${EVENTIFY_SERVER_IMAGE:-openjdk:21-slim}
+    container_name: ${EVENTIFY_SERVER_CONTAINER:-eventify_server}
+    depends_on:
+      - eventify_db
+    build:
+      context: ./admin-server
+      dockerfile_inline: |
+        FROM openjdk:21-slim
+        ARG EVENTIFY_SERVER_WORKDIR=default_dir &&\
+            EVENTIFY_SERVER_SNAPSHOT=default_snapshot &&\
+            EVENTIFY_SERVER_PORT=default_port
+        WORKDIR ${EVENTIFY_SERVER_WORKDIR}
+        COPY ./target/${EVENTIFY_SERVER_SNAPSHOT} ${EVENTIFY_SERVER_WORKDIR}
+        EXPOSE ${EVENTIFY_SERVER_PORT}
+        ENTRYPOINT ["java","-jar","admin-server-0.0.1-SNAPSHOT.jar"]
+    environment:
+      EVENTIFY_SERVER_URL: ${EVENTIFY_SERVER_URL}
+    ports:
+      - 8082:${EVENTIFY_SERVER_PORT:-8080}
+
+  eventify_db:
+    image: mysql:latest
+    container_name: eventify_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${EVENTIFY_DB_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${EVENTIFY_DB_DATABASE:-appdb}
+    ports:
+      - 3307:${EVENTIFY_DB_PORT:-3306}

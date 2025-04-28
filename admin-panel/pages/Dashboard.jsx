@@ -8,6 +8,7 @@ export function Dashboard() {
 	const [organizersCount, setOrganizersCount] = useState(0);
 	const [attendeesCount, setAttendeesCount] = useState(0);
 	const navigate = useNavigate();
+	const apiBaseUrl = process.env.EVENTIFY_SERVER_URL || "http://eventify_server:8080";
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -20,7 +21,7 @@ export function Dashboard() {
 
 	const fetchCounts = async () => {
 		try {
-			const response = await axios.get("http://localhost:8080/api/admin/stats");
+			const response = await axios.get(`${apiBaseUrl}/api/admin/stats`);
 			setOrganizersCount(response.data.organizers || 0);
 			setAttendeesCount(response.data.attendees || 0);
 		} catch (error) {

@@ -1,7 +1,10 @@
 {
 	"scripts": {
-		"dev": "vite",
-		"build": "vite build"
+		"dev:vite": "vite",
+		"dev:vite:build": "vite build",
+		"dev:eventify":"docker compose up",
+		"dev:eventify:build:run": "docker compose up --build",
+		"dev:eventify:detach:run": "docker compose up -d"
 	},
 	"dependencies": {
 		"axios": "^1.8.3",

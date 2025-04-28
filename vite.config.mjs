@@ -14,6 +14,11 @@ export default defineConfig({
 		},
 	},
 	server: {
+		"/api":{
+			target: "http://localhost:8082",
+			changeOrigin: true,
+			secure: false,
+		},
 		host: true,
 		port: 3000,
 	},

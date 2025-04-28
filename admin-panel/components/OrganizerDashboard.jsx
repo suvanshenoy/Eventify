@@ -11,6 +11,7 @@ export function OrganizerDashboard() {
 		location: "",
 	});
 	const [events, setEvents] = useState([]);
+    const apiBaseUrl =  "http://localhost:8082"
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -25,14 +26,14 @@ export function OrganizerDashboard() {
 		try {
 			const organizerId = localStorage.getItem("organizerId");
 			const response = await axios.get(
-				`http://localhost:8080/api/events/organizer/${organizerId}`,
+				`${apiBaseUrl}/api/events/organizer/${organizerId}`,
 			);
 			setEvents(response.data);
 
 			// Fetch registrations for each event
 			response.data.forEach(async (event) => {
 				const regResponse = await axios.get(
-					`http://localhost:8080/api/registrations/event/${event.event_id}`,
+					`${process.env.EVENTIFY_SERVER_URL || "http://eventify_server:8080"}/api/registrations/event/${event.event_id}`,
 				);
 				setRegistrations((prev) => ({
 					...prev,
@@ -69,7 +70,7 @@ export function OrganizerDashboard() {
 
 		try {
 			const response = await axios.post(
-				"http://localhost:8080/api/events/create",
+				`${process.env.EVENTIFY_SERVER_URL || "http://eventify_server:8080"}/api/events/create`,
 				eventData,
 				{
 					headers: {
